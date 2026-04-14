@@ -517,6 +517,7 @@ MonoBehaviour:
   score: 0
   startingAmmo: 30
   currentAmmo: 0
+  coinPickupPrefab: {fileID: 8226232571915817061, guid: 6c32c91cec05a7346a1819391d5ba472, type: 3}
   healthText: {fileID: 640461022}
   scoreText: {fileID: 679328008}
   ammoText: {fileID: 1897200233}

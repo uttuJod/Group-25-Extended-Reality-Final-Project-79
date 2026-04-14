@@ -154,6 +154,11 @@ MonoBehaviour:
   bossHeadMultiplier: 2.5
   audioSource: {fileID: 3348030700005829556}
   hurtClip: {fileID: 8300000, guid: e47b13c30f04d6142b5beaa92c067bec, type: 3}
+  worldHealthBarPrefab: {fileID: 0}
+  healthBarAnchor: {fileID: 0}
+  coinPickupPrefab: {fileID: 0}
+  coinDropPoint: {fileID: 0}
+  coinScoreValue: 10
 --- !u!82 &3348030700005829556
 AudioSource:
   m_ObjectHideFlags: 0
@@ -408,7 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartHitbox
   zone: 1
-  owner: {fileID: 2817518111339465563}
+  owner: {fileID: 0}
 --- !u!1 &9065015955651983102
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyPartHitbox
   zone: 0
-  owner: {fileID: 2817518111339465563}
+  owner: {fileID: 0}
 --- !u!1001 &8168547737558220692
 PrefabInstance:
   m_ObjectHideFlags: 0

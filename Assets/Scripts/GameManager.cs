@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     [Header("Ammo")]
     public int startingAmmo = 30;
     public int currentAmmo;
-
+    [Header("Pickup Prefabs")]
+    public GameObject coinPickupPrefab;
     [Header("UI")]
     public TMP_Text healthText;
     public TMP_Text scoreText;
