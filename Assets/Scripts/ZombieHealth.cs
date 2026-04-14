@@ -15,14 +15,35 @@ public class ZombieHealth : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip hurtClip;
 
+    [Header("World Health Bar")]
+    public GameObject worldHealthBarPrefab;
+    public Transform healthBarAnchor;
+
     int currentHealth;
     bool dead = false;
     Animator animator;
+    GameObject spawnedHealthBar;
+
+    public int CurrentHealth => currentHealth;
+    public float HealthPercent => maxHealth > 0 ? (float)currentHealth / maxHealth : 0f;
+    public bool IsDead => dead;
 
     void Start()
     {
         currentHealth = maxHealth;
         animator = GetComponentInChildren<Animator>();
+
+        if (worldHealthBarPrefab != null)
+        {
+            spawnedHealthBar = Instantiate(worldHealthBarPrefab);
+
+            ZombieWorldHealthBar bar = spawnedHealthBar.GetComponent<ZombieWorldHealthBar>();
+            if (bar != null)
+            {
+                bar.target = this;
+                bar.followTarget = healthBarAnchor != null ? healthBarAnchor : transform;
+            }
+        }
     }
 
     public void TakeBodyPartDamage(BodyPartZone zone, int baseDamage, int headshotAmmoReward)
@@ -64,6 +85,9 @@ public class ZombieHealth : MonoBehaviour
 
         currentHealth -= finalDamage;
 
+        if (currentHealth < 0)
+            currentHealth = 0;
+
         if (currentHealth <= 0)
             Die();
     }
@@ -71,6 +95,9 @@ public class ZombieHealth : MonoBehaviour
     void Die()
     {
         dead = true;
+
+        if (spawnedHealthBar != null)
+            Destroy(spawnedHealthBar);
 
         if (GameManager.Instance != null)
             GameManager.Instance.AddScore(isBoss ? 50 : 10);

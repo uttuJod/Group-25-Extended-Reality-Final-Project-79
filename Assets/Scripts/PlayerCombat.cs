@@ -2,7 +2,15 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
+    [Header("References")]
     public Camera playerCamera;
+
+    [Header("Gun Visual Setup")]
+    public Transform firePoint;
+    public Animator gunAnimator;
+    public string shootTriggerName = "Shoot";
+
+    [Header("Shooting")]
     public float shootRange = 50f;
     public int damage = 1;
     public LayerMask hitMask;
@@ -26,9 +34,8 @@ public class PlayerCombat : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("PlayerCombat running on object: " + gameObject.name);
-        Debug.Log("Blood prefab at Start: " + (bloodEffectPrefab != null ? bloodEffectPrefab.name : "NULL"));
-        Debug.Log("UIFeedback at Start: " + (uiFeedback != null ? uiFeedback.name : "NULL"));
+        if (playerCamera == null)
+            playerCamera = Camera.main;
     }
 
     void Update()
@@ -37,56 +44,42 @@ public class PlayerCombat : MonoBehaviour
             return;
 
         if (Input.GetMouseButtonDown(0))
-        {
             Shoot();
-        }
     }
 
-    void Shoot()
+    public void Shoot()
     {
-        Debug.Log("Shoot called on object: " + gameObject.name);
-        Debug.Log("Blood prefab before shot: " + (bloodEffectPrefab != null ? bloodEffectPrefab.name : "NULL"));
-        Debug.Log("UIFeedback before shot: " + (uiFeedback != null ? uiFeedback.name : "NULL"));
-
         if (GameManager.Instance != null)
         {
             if (!GameManager.Instance.TryUseAmmo(ammoPerShot))
-            {
-                Debug.Log("No ammo");
                 return;
-            }
         }
+
+        if (gunAnimator != null && !string.IsNullOrEmpty(shootTriggerName))
+            gunAnimator.SetTrigger(shootTriggerName);
 
         if (shootAudioSource != null && shootClip != null)
             shootAudioSource.PlayOneShot(shootClip);
 
+        if (playerCamera == null)
+            return;
+
         Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-        Debug.DrawRay(ray.origin, ray.direction * shootRange, Color.red, 1.0f);
+        Debug.DrawRay(ray.origin, ray.direction * shootRange, Color.green, 1f);
 
         if (Physics.Raycast(ray, out RaycastHit hit, shootRange, hitMask, QueryTriggerInteraction.Collide))
         {
-            Debug.Log("Raycast hit: " + hit.collider.name);
-
             BodyPartHitbox bodyPart = hit.collider.GetComponent<BodyPartHitbox>();
             if (bodyPart == null)
                 bodyPart = hit.collider.GetComponentInParent<BodyPartHitbox>();
 
             if (bodyPart != null && bodyPart.owner != null)
             {
-                Debug.Log("BodyPart branch reached");
-
                 SpawnHitEffect(hit, true);
                 bodyPart.owner.TakeBodyPartDamage(bodyPart.zone, damage, headshotAmmoReward);
 
                 if (uiFeedback != null)
-                {
-                    Debug.Log("Showing hitmarker from body part branch");
                     uiFeedback.ShowHitmarker();
-                }
-                else
-                {
-                    Debug.Log("uiFeedback is NULL in body part branch");
-                }
 
                 return;
             }
@@ -97,30 +90,16 @@ public class PlayerCombat : MonoBehaviour
 
             if (zombie != null)
             {
-                Debug.Log("Zombie branch reached");
-
                 SpawnHitEffect(hit, true);
                 zombie.TakeBodyPartDamage(BodyPartZone.Torso, damage, 0);
 
                 if (uiFeedback != null)
-                {
-                    Debug.Log("Showing hitmarker from zombie branch");
                     uiFeedback.ShowHitmarker();
-                }
-                else
-                {
-                    Debug.Log("uiFeedback is NULL in zombie branch");
-                }
 
                 return;
             }
 
-            Debug.Log("Non-zombie surface hit");
             SpawnHitEffect(hit, false);
-        }
-        else
-        {
-            Debug.Log("Raycast missed");
         }
     }
 
@@ -129,15 +108,10 @@ public class PlayerCombat : MonoBehaviour
         GameObject effectPrefab = hitZombie ? bloodEffectPrefab : defaultHitEffectPrefab;
 
         if (effectPrefab == null)
-        {
-            Debug.Log("No effect prefab assigned for this hit type");
             return;
-        }
 
         Vector3 spawnPosition = hit.point + hit.normal * hitEffectOffset;
         Quaternion spawnRotation = Quaternion.LookRotation(hit.normal);
-
-        Debug.Log("Spawning effect: " + effectPrefab.name + " at " + spawnPosition);
 
         GameObject fx = Instantiate(effectPrefab, spawnPosition, spawnRotation);
         Destroy(fx, hitEffectLifetime);
