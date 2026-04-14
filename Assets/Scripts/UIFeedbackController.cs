@@ -12,7 +12,7 @@ public class UIFeedbackController : MonoBehaviour
     [Header("Damage Flash")]
     public Image damageFlashImage;
     public float damageFlashAlpha = 0.35f;
-    public float damageFlashFadeSpeed = 2.5f;
+    public float damageFlashFadeSpeed = 0.4f;
 
     void Start()
     {
