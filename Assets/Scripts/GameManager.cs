@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Player Stats")]
     public int playerHealth = 100;
+    public int maxHealth = 100;
     public int score = 0;
 
     [Header("Ammo")]
@@ -19,8 +21,12 @@ public class GameManager : MonoBehaviour
     public TMP_Text ammoText;
     public GameObject gameOverPanel;
 
+    [Header("Player Health Bar")]
+    public Image playerHealthBarFill;
+
     [Header("UI Feedback")]
     public UIFeedbackController uiFeedback;
+
     public bool IsGameOver { get; private set; }
 
     void Awake()
@@ -48,28 +54,26 @@ public class GameManager : MonoBehaviour
     }
 
     public void TakeDamage(int amount)
-{
-    if (IsGameOver) return;
-
-    playerHealth -= amount;
-
-    if (playerHealth < 0)
-        playerHealth = 0;
-
-    if (uiFeedback != null)
     {
-        float lowHealthStrength = 1f - ((float)playerHealth / 100f);
-        lowHealthStrength = Mathf.Clamp01(lowHealthStrength);
-        uiFeedback.ShowDamageFlash(Mathf.Lerp(0.35f, 1f, lowHealthStrength));
-    }
+        if (IsGameOver) return;
 
-    if (playerHealth <= 0)
-    {
-        GameOver();
-    }
+        playerHealth -= amount;
 
-    UpdateUI();
-}
+        if (playerHealth < 0)
+            playerHealth = 0;
+
+        if (uiFeedback != null)
+        {
+            float lowHealthStrength = 1f - ((float)playerHealth / maxHealth);
+            lowHealthStrength = Mathf.Clamp01(lowHealthStrength);
+            uiFeedback.ShowDamageFlash(Mathf.Lerp(0.35f, 1f, lowHealthStrength));
+        }
+
+        if (playerHealth <= 0)
+            GameOver();
+
+        UpdateUI();
+    }
 
     public bool TryUseAmmo(int amount)
     {
@@ -86,22 +90,25 @@ public class GameManager : MonoBehaviour
         if (IsGameOver) return;
 
         currentAmmo += amount;
+
         if (currentAmmo < 0)
             currentAmmo = 0;
 
         UpdateUI();
     }
+
     public void AddHealth(int amount)
-{
-    if (IsGameOver) return;
+    {
+        if (IsGameOver) return;
 
-    playerHealth += amount;
+        playerHealth += amount;
 
-    if (playerHealth > 100)
-        playerHealth = 100;
+        if (playerHealth > maxHealth)
+            playerHealth = maxHealth;
 
-    UpdateUI();
-}
+        UpdateUI();
+    }
+
     void GameOver()
     {
         IsGameOver = true;
@@ -123,5 +130,8 @@ public class GameManager : MonoBehaviour
 
         if (ammoText != null)
             ammoText.text = "Ammo: " + currentAmmo;
+
+        if (playerHealthBarFill != null)
+            playerHealthBarFill.fillAmount = (float)playerHealth / maxHealth;
     }
 }
