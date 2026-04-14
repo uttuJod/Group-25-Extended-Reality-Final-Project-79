@@ -33,16 +33,37 @@ public class ZombieHealth : MonoBehaviour
         currentHealth = maxHealth;
         animator = GetComponentInChildren<Animator>();
 
+        Debug.Log("ZombieHealth Start on: " + gameObject.name);
+        Debug.Log("worldHealthBarPrefab = " + (worldHealthBarPrefab != null ? worldHealthBarPrefab.name : "NULL"));
+        Debug.Log("healthBarAnchor = " + (healthBarAnchor != null ? healthBarAnchor.name : "NULL"));
+
         if (worldHealthBarPrefab != null)
         {
             spawnedHealthBar = Instantiate(worldHealthBarPrefab);
 
-            ZombieWorldHealthBar bar = spawnedHealthBar.GetComponent<ZombieWorldHealthBar>();
-            if (bar != null)
+            if (spawnedHealthBar != null)
             {
-                bar.target = this;
-                bar.followTarget = healthBarAnchor != null ? healthBarAnchor : transform;
+                Debug.Log("Health bar created successfully: " + spawnedHealthBar.name);
+
+                ZombieWorldHealthBar bar = spawnedHealthBar.GetComponent<ZombieWorldHealthBar>();
+                if (bar != null)
+                {
+                    bar.target = this;
+                    bar.followTarget = healthBarAnchor != null ? healthBarAnchor : transform;
+                }
+                else
+                {
+                    Debug.LogWarning("Spawned health bar prefab is missing ZombieWorldHealthBar script.");
+                }
             }
+            else
+            {
+                Debug.LogWarning("Instantiate returned null for worldHealthBarPrefab.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("worldHealthBarPrefab is NULL on zombie: " + gameObject.name);
         }
     }
 
