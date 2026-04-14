@@ -18,7 +18,10 @@ public class ZombieHealth : MonoBehaviour
     [Header("World Health Bar")]
     public GameObject worldHealthBarPrefab;
     public Transform healthBarAnchor;
-
+    [Header("Coin Drop")]
+    public GameObject coinPickupPrefab;
+    public Transform coinDropPoint;
+    public int coinScoreValue = 10;
     int currentHealth;
     bool dead = false;
     Animator animator;
@@ -99,8 +102,16 @@ public class ZombieHealth : MonoBehaviour
         if (spawnedHealthBar != null)
             Destroy(spawnedHealthBar);
 
-        if (GameManager.Instance != null)
-            GameManager.Instance.AddScore(isBoss ? 50 : 10);
+        if (coinPickupPrefab != null)
+{
+    Vector3 dropPosition = coinDropPoint != null ? coinDropPoint.position : transform.position;
+
+    GameObject coin = Instantiate(coinPickupPrefab, dropPosition, Quaternion.identity);
+
+    CoinPickup coinPickup = coin.GetComponent<CoinPickup>();
+    if (coinPickup != null)
+        coinPickup.scoreAmount = isBoss ? 50 : coinScoreValue;
+}
 
         ZombieAI ai = GetComponent<ZombieAI>();
         if (ai != null)

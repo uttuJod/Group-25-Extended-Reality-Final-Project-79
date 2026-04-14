@@ -224,6 +224,11 @@ MonoBehaviour:
   bossHeadMultiplier: 2.5
   audioSource: {fileID: -9083051283212534272}
   hurtClip: {fileID: 8300000, guid: e47b13c30f04d6142b5beaa92c067bec, type: 3}
+  worldHealthBarPrefab: {fileID: 0}
+  healthBarAnchor: {fileID: 0}
+  coinPickupPrefab: {fileID: 8226232571915817061, guid: 6c32c91cec05a7346a1819391d5ba472, type: 3}
+  coinDropPoint: {fileID: 0}
+  coinScoreValue: 10
 --- !u!82 &-9083051283212534272
 AudioSource:
   m_ObjectHideFlags: 0
