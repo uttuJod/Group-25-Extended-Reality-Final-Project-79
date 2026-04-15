@@ -127,6 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f095e569bbf7eb94a8cdbf1a2ad1af94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinPickup
-  scoreAmount: 10
+  scoreAmount: 1
   pickupDistance: 1.5
   pickupDelay: 0.5
