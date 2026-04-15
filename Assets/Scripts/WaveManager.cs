@@ -23,6 +23,8 @@ public class WaveManager : MonoBehaviour
 
     [Header("Intro Sequence")]
     public bool useGirlIntro = true;
+    public GameObject introPanel;
+    public float introDuration = 7f;
     bool introFinished = false;
 
     int currentLevelIndex;
@@ -52,7 +54,13 @@ public class WaveManager : MonoBehaviour
 
         if (useGirlIntro)
         {
-            introFinished = false;
+            if (introPanel != null)
+                introPanel.SetActive(true);
+
+            introFinished = true;
+            waiting = true;
+            timer = introDuration;
+            state = FlowState.ShowingIncomingWave;
             return;
         }
 
@@ -79,6 +87,9 @@ public class WaveManager : MonoBehaviour
 
             if (state == FlowState.ShowingIncomingWave)
             {
+                if (introPanel != null && introPanel.activeSelf)
+                    introPanel.SetActive(false);
+
                 StartCurrentWaveImmediately();
             }
             else if (state == FlowState.BetweenWaves)
@@ -94,9 +105,13 @@ public class WaveManager : MonoBehaviour
 
     public void StartIntroWaveFlow()
     {
-        if (introFinished)
+        if (introFinished && !waiting)
             return;
 
+        if (introPanel != null && introPanel.activeSelf)
+            introPanel.SetActive(false);
+
+        waiting = false;
         introFinished = true;
         StartCurrentWaveImmediately();
     }
