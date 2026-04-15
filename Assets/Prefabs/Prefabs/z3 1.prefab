@@ -236,6 +236,9 @@ MonoBehaviour:
   damageDistance: 1.4
   damageAmount: 10
   damageCooldown: 1
+  targetRefreshInterval: 0.25
+  girlDamageDistance: 1
+  playerDamageDistance: 1.5
 --- !u!114 &604366139996305030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,15 +251,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dda1d770233dbb4f93bcd5841808ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieHealth
-  maxHealth: 3
+  maxHealth: 10
   isBoss: 0
   torsoMultiplier: 1
   limbMultiplier: 0.5
-  bossHeadMultiplier: 2.5
+  bossHeadMultiplier: 5
   audioSource: {fileID: 5793368447147045662}
   hurtClip: {fileID: 8300000, guid: e47b13c30f04d6142b5beaa92c067bec, type: 3}
   worldHealthBarPrefab: {fileID: 1210008604688915447, guid: 5d9a89f963525444a9475c108f1f9363, type: 3}
   healthBarAnchor: {fileID: 7020786371066119408}
+  coinDropPoint: {fileID: 0}
+  coinScoreValue: 30
 --- !u!82 &5793368447147045662
 AudioSource:
   m_ObjectHideFlags: 0

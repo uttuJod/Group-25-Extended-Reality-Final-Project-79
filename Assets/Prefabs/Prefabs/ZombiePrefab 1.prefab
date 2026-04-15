@@ -393,6 +393,9 @@ MonoBehaviour:
   damageDistance: 1.4
   damageAmount: 10
   damageCooldown: 1
+  targetRefreshInterval: 0.25
+  girlDamageDistance: 1
+  playerDamageDistance: 1.5
 --- !u!114 &3177087717335261268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,11 +412,13 @@ MonoBehaviour:
   isBoss: 0
   torsoMultiplier: 1
   limbMultiplier: 0.5
-  bossHeadMultiplier: 2.5
+  bossHeadMultiplier: 5
   audioSource: {fileID: 3532240785607600579}
   hurtClip: {fileID: 8300000, guid: e47b13c30f04d6142b5beaa92c067bec, type: 3}
   worldHealthBarPrefab: {fileID: 1210008604688915447, guid: 5d9a89f963525444a9475c108f1f9363, type: 3}
   healthBarAnchor: {fileID: 6677102882473370189}
+  coinDropPoint: {fileID: 0}
+  coinScoreValue: 10
 --- !u!82 &3532240785607600579
 AudioSource:
   m_ObjectHideFlags: 0

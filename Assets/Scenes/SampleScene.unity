@@ -547,8 +547,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43c61e26756abc4ab07e425370b561c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  playerHealth: 100
-  maxHealth: 100
+  playerHealth: 200
+  maxHealth: 200
   score: 0
   startingAmmo: 30
   currentAmmo: 0
@@ -689,7 +689,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -822, y: -631}
+  m_AnchoredPosition: {x: -991, y: -583}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &381512183
@@ -778,7 +778,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -166.4285, y: 0, z: 0, w: 96.91208}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1384,7 +1384,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 54.33168, y: 22.44057, z: 209.21925, w: -10.238079}
+  m_margin: {x: 8.82, y: 22.44057, z: 209.21925, w: -10.238079}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1474,8 +1474,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2416,7 +2416,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1241364537}
@@ -3036,28 +3036,48 @@ MonoBehaviour:
       - zombieName: baisc
         prefab: {fileID: 8425906823858840280, guid: 981f86281756d7e458a2e4da6ba3a00d, type: 3}
         count: 3
-    - waveName: 1
+  - levelName: 2
+    waves:
+    - waveName: 
       warningDuration: 2
-      spawnInterval: 1.2
+      spawnInterval: 1.5
       maxAlive: 3
-      zombieMoveSpeed: 1.5
+      zombieMoveSpeed: 1
       zombieGroups:
-      - zombieName: run
+      - zombieName: 
+        prefab: {fileID: 8425906823858840280, guid: 981f86281756d7e458a2e4da6ba3a00d, type: 3}
+        count: 2
+    - waveName: 
+      warningDuration: 2
+      spawnInterval: 2
+      maxAlive: 15
+      zombieMoveSpeed: 3
+      zombieGroups:
+      - zombieName: 
         prefab: {fileID: 8501385841632303169, guid: a827b88b9f79f6443b26737c0e36f601, type: 3}
         count: 2
-  - levelName: bada lund
+  - levelName: 3
     waves:
     - waveName: 
       warningDuration: 2
       spawnInterval: 1.2
-      maxAlive: 3
+      maxAlive: 4
       zombieMoveSpeed: 2
       zombieGroups:
       - zombieName: 
-        prefab: {fileID: 8501385841632303169, guid: a827b88b9f79f6443b26737c0e36f601, type: 3}
-        count: 0
+        prefab: {fileID: 8425906823858840280, guid: 981f86281756d7e458a2e4da6ba3a00d, type: 3}
+        count: 2
       - zombieName: 
-        prefab: {fileID: 3717552466335627850, guid: de3da3dc07ffae24bb3d4d9344f18c04, type: 3}
+        prefab: {fileID: 8425906823858840280, guid: 981f86281756d7e458a2e4da6ba3a00d, type: 3}
+        count: 1
+    - waveName: 
+      warningDuration: 2
+      spawnInterval: 1.2
+      maxAlive: 4
+      zombieMoveSpeed: 4
+      zombieGroups:
+      - zombieName: 
+        prefab: {fileID: 4478688813847301986, guid: bbebf8f901cb942428f3f24d9f21d6d7, type: 3}
         count: 1
   startLevelIndex: 0
   timeBetweenWaves: 3
@@ -3432,7 +3452,7 @@ MonoBehaviour:
   waveManager: {fileID: 1406396893}
   animator: {fileID: 1699265450}
   detectDistance: 8
-  moveSpeed: 1.8
+  moveSpeed: 3
   stopDistance: 0.8
   rotationSpeed: 8
   facePlayerAlways: 1
@@ -3464,7 +3484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f49a4cae2b2ba44dbfd22b2d90ad51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GirlHealth
-  maxHealth: 100
+  maxHealth: 200
   attackTargetPoint: {fileID: 0}
   healthBarAnchor: {fileID: 1551711907}
   worldHealthBarPrefab: {fileID: 8048785206110353367, guid: 71313eedc07d674408cf69c2dddd44a0, type: 3}
