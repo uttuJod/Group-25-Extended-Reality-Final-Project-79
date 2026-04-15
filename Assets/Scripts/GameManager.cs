@@ -14,8 +14,10 @@ public class GameManager : MonoBehaviour
     [Header("Ammo")]
     public int startingAmmo = 30;
     public int currentAmmo;
+
     [Header("Pickup Prefabs")]
     public GameObject coinPickupPrefab;
+
     [Header("UI")]
     public TMP_Text healthText;
     public TMP_Text scoreText;
@@ -71,9 +73,15 @@ public class GameManager : MonoBehaviour
         }
 
         if (playerHealth <= 0)
-            GameOver();
+            TriggerGameOver();
 
         UpdateUI();
+    }
+
+    public void OnGirlDied()
+    {
+        if (IsGameOver) return;
+        TriggerGameOver();
     }
 
     public bool TryUseAmmo(int amount)
@@ -110,8 +118,10 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
-    void GameOver()
+    public void TriggerGameOver()
     {
+        if (IsGameOver) return;
+
         IsGameOver = true;
 
         if (gameOverPanel != null)
@@ -124,13 +134,13 @@ public class GameManager : MonoBehaviour
     void UpdateUI()
     {
         if (healthText != null)
-            healthText.text = "Health: " + playerHealth;
+            healthText.text = "" + playerHealth;
 
         if (scoreText != null)
-            scoreText.text = "Score: " + score;
+            scoreText.text = "" + score;
 
         if (ammoText != null)
-            ammoText.text = "Ammo: " + currentAmmo;
+            ammoText.text = "" + currentAmmo;
 
         if (playerHealthBarFill != null)
             playerHealthBarFill.fillAmount = (float)playerHealth / maxHealth;

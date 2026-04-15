@@ -21,6 +21,10 @@ public class WaveManager : MonoBehaviour
     public float timeBetweenWaves = 2f;
     public float incomingWaveTextDuration = 2f;
 
+    [Header("Intro Sequence")]
+    public bool useGirlIntro = true;
+    bool introFinished = false;
+
     int currentLevelIndex;
     int currentWaveIndex;
 
@@ -46,12 +50,22 @@ public class WaveManager : MonoBehaviour
         if (waveStatusText != null)
             waveStatusText.text = "";
 
+        if (useGirlIntro)
+        {
+            introFinished = false;
+            return;
+        }
+
+        introFinished = true;
         StartCurrentWaveImmediately();
     }
 
     void Update()
     {
         if (GameManager.Instance != null && GameManager.Instance.IsGameOver)
+            return;
+
+        if (!introFinished)
             return;
 
         if (!waiting)
@@ -76,6 +90,15 @@ public class WaveManager : MonoBehaviour
                 StartCurrentWaveImmediately();
             }
         }
+    }
+
+    public void StartIntroWaveFlow()
+    {
+        if (introFinished)
+            return;
+
+        introFinished = true;
+        StartCurrentWaveImmediately();
     }
 
     void StartCurrentWaveImmediately()
